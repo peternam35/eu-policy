@@ -44,9 +44,9 @@ html,body{background:var(--ground);color:var(--ink);transition:background .18s,c
 
 /* ===== 헤더 3열 구성 — 제목(좌) · 서명+기록보기(중) · 토글+기준일(우), 각 2줄 ===== */
 .hcenter{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0}
-.hright{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px}
+.hright{flex-shrink:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px}
 .htoggles{display:flex;align-items:center;gap:6px}
-.hasof{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--ink-dim);white-space:nowrap}
+.hasof{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--ink-dim);white-space:normal;text-align:right}
 .hasof b{color:var(--ink-strong);font-weight:700}
 .hasof .dm{width:5px;height:5px;background:var(--signal);transform:rotate(45deg);flex-shrink:0}
 .archive-open-btn{padding:2px 10px;font-size:11px;border-radius:999px;border:1px solid var(--ink-faint);
@@ -70,8 +70,6 @@ html,body{background:var(--ground);color:var(--ink);transition:background .18s,c
 @media(max-width:640px){
   .hbar{flex-wrap:wrap;row-gap:8px}
   .hcenter{order:3;flex:1 1 100%;align-items:center}
-  .hright{flex-shrink:1;min-width:0}
-  .hasof{white-space:normal;text-align:right}
 }
 @media(max-width:620px){.tgb span{display:none}.tgb{padding:4px 8px}}
 @media(max-width:480px){
