@@ -656,8 +656,8 @@ body.embedded .htitle .s{font-size:10px}
         </div>
       </div>
       <div class="hasof"><span class="dm"></span>
-        <span class="i18n-ko"><b>2026년 9월 20일</b> 현재 기준 (EU 트랙 · G20 탭은 2026-08-01 별도 기준)</span>
-        <span class="i18n-en">As of <b>September 20, 2026</b> (EU track · G20 tab uses a separate reference date, 2026-08-01)</span>
+        <span class="i18n-ko"><b>2026년 9월 20일</b> 현재 기준 (EU 트랙 · G20 탭은 2026-09-20 별도 기준)</span>
+        <span class="i18n-en">As of <b>September 20, 2026</b> (EU track · G20 tab uses a separate reference date, 2026-09-20)</span>
       </div>
     </div>
   </div>
@@ -834,7 +834,7 @@ body.embedded .htitle .s{font-size:10px}
         <span class="eb">GLOBAL REGULATORY PULSE</span>
         <h3><span class="i18n-ko">G20 ESG 규제 인텔리전스</span><span class="i18n-en">G20 ESG Regulatory Intelligence</span></h3>
         <div class="s"><span class="i18n-ko">권역에서 국가를 선택하면 같은 화면 아래 국가별 현황이 즉시 갱신됩니다. 등록 법규·정책 수치를 누르면 실제 목록을 볼 수 있습니다.</span><span class="i18n-en">Select a country by region and the country brief below updates instantly. The registered-laws count is backed by an actual itemized list below it.</span></div>
-        <div class="s mono" style="margin-top:4px;color:var(--ink-faint);font-size:10px"><span class="i18n-ko">기준일 2026-08-01 · G20 개별국 조사 예정(EU 탭과 별도 기준일)</span><span class="i18n-en">As of 2026-08-01 · G20 country-level review pending (separate reference date from the EU tab)</span></div>
+        <div class="s mono" style="margin-top:4px;color:var(--ink-faint);font-size:10px"><span class="i18n-ko">기준일 2026-09-20 · G20 개별국 전수 조사 완료(EU 탭과 별도로 관리되는 기준일)</span><span class="i18n-en">As of 2026-09-20 · full G20 country-level review completed (a reference date tracked separately from the EU tab)</span></div>
       </div>
       <button id="g20-compare-open" class="g20-primary" type="button"><span class="i18n-ko">국가비교 열기</span><span class="i18n-en">Open comparison</span></button>
     </div>
@@ -2354,7 +2354,7 @@ renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure(
    배열(P/EN_P, 11건)을 그대로 재사용해 탭 간 수치를 일치시킨다. 그 외 16개국은
    웹 조사로 확인한 실제 법규명·시행현황을 사용하며, 확인되지 않은 항목은 만들지 않는다. */
 (()=>{
-  const AS_OF='2026-08-01';
+  const AS_OF='2026-09-20';
   /* EU 카드의 법규 목록은 EU 트래커(P/EN_P)에서 그대로 파생되므로, G20 전체 기준일과 별개로 그 트래커의 실제 기준일을 쓴다. */
   const EU_AS_OF='2026-09-20';
   const countries=[
@@ -2544,12 +2544,12 @@ renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure(
         {n:'King IV 코드',s:'준수·설명(apply-or-explain)',s_en:'Apply-or-explain',
           note:'지배구조 원칙에 기후 대응 책임 포함',note_en:'Governance code incorporating climate-response responsibilities'}
       ]},
-    {c:'AFU',n:'아프리카연합(AU)',n_en:'African Union (AU)',f:'🌍',r:'아프리카',m:1,ck:'2026-08-01',
+    {c:'AFU',n:'아프리카연합(AU)',n_en:'African Union (AU)',f:'🌍',r:'아프리카',m:1,ck:'2026-09-20',
       a:'AU 집행위원회 · 아프리카개발은행(AfDB)',a_en:'AU Commission · African Development Bank (AfDB)',
       t:"대륙 차원 조율 프레임워크와 회원국별 개별 법규를 구분해서 판단",t_en:"Distinguish continent-wide coordination frameworks from each member state's own binding law",
       laws:[
-        {n:'아프리카 지속가능금융 택소노미',n_en:'African Sustainable Finance Taxonomy',s:'자발적 · 조율 중',s_en:'Voluntary · being harmonized',
-          note:'AfDB 주도(AFAC), 60여개 기관이 참여해 개발, 2025~2026년 검증',note_en:'Led by AfDB via the AFAC platform with 60+ institutions; validated through 2025–2026'},
+        {n:'아프리카 지속가능금융 택소노미',n_en:'African Sustainable Finance Taxonomy',s:'검증 완료 · 개별 채택 단계',s_en:'Validated · country-level adoption under way',
+          note:'AfDB 주도(AFAC), 60여개 기관이 참여해 개발 — 2025-07-16·17 나이로비에서 업계 검증(endorsement) 완료. 개별 회원국 도입 여부는 각국 정책에 따라 진행',note_en:'Led by AfDB via the AFAC platform with 60+ institutions; industry-validated (endorsed) in Nairobi on 16-17 Jul 2025. Country-level adoption proceeds per each member state\'s own policy'},
         {n:'Africa ESG Hub',s:'자문 · 구속력 없음',s_en:'Advisory · non-binding',
           note:'AfDB 지원, 회원국별 공시 로드맵 수립을 지원(강제력 없음). 개별 회원국 법규는 각국 항목 참고(예: 남아프리카공화국)',note_en:"AfDB-supported effort helping member states build disclosure roadmaps (non-binding). See each member state's own entry (e.g. South Africa) for binding national law"}
       ]},
