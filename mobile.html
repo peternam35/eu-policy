@@ -140,6 +140,9 @@ header{border-bottom:1px solid var(--rule);background:var(--raised);position:sti
 
 /* ===== layout ===== */
 .shell{display:grid;grid-template-columns:262px 1fr;min-height:calc(100vh - var(--hdrh,150px))}
+.shell.hide-eu-filters{grid-template-columns:1fr}
+.shell.hide-eu-filters aside{display:none}
+.shell.hide-eu-filters #filtbar{display:none!important}
 @media(max-width:980px){.shell{grid-template-columns:1fr}aside{display:none}}
 @media(max-width:900px){
   .navrow{gap:10px;padding:6px 14px 7px}
@@ -2315,6 +2318,7 @@ function goto(i){
   document.getElementById('pgNextT').textContent=vi<4?NAMES()[vi+1]:'—';
   document.getElementById('detail').style.display=(vi===1)?'block':'none';
   document.getElementById('review').style.display=(vi>=3)?'none':'block';
+  document.querySelector('.shell').classList.toggle('hide-eu-filters',vi>=3);
   if(vi===4){renderEco();}
   else if(vi===3){if(typeof window.g20Refresh==='function')window.g20Refresh();}
   else{renderReview();}
