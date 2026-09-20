@@ -579,10 +579,17 @@ body.embedded .htitle .s{font-size:10px}
 .eco-info-tag.criteria{background:rgba(var(--flow-rgb),.16);color:var(--flow)}
 .eco-info-tag.key{background:rgba(var(--signal-rgb),.16);color:var(--signal)}
 .eco-info-text{font-size:11px;line-height:1.6;color:var(--ink-dim)}
+.eco-scroll-hint{display:none}
 @media(max-width:820px){
   .score-grid{grid-template-columns:repeat(2,1fr)}
   #eco-table{min-width:680px}
   .listwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .eco-scroll-hint{display:block;font-size:10.5px;color:var(--ink-dim);margin:0 0 6px}
+  .eco-sticky1,.eco-sticky2,.eco-sticky3{position:sticky;background:var(--raised)}
+  .eco-sticky1{left:0}
+  .eco-sticky2{left:26px}
+  .eco-sticky3{left:58px;box-shadow:2px 0 4px rgba(0,0,0,.25);min-width:140px;max-width:140px;white-space:normal}
+  th.eco-sticky1,th.eco-sticky2,th.eco-sticky3{background:var(--sunken);z-index:1}
 }
 
 /* ===== V4 · G20 ESG 규제 인텔리전스 (통합 모듈 · 셀렉터는 g20- 접두사 유지) ===== */
@@ -888,6 +895,7 @@ body.embedded .htitle .s{font-size:10px}
     <div class="score-grid" id="eco-score-grid"></div>
     <div class="hint"><span class="i18n-ko">이 체크시트는 EcoVadis 평가 기준을 참고한 자가진단 도구입니다. 실제 EcoVadis 심사 결과와는 다를 수 있습니다.</span><span class="i18n-en">This checksheet is a self-diagnostic tool referencing EcoVadis assessment criteria. Actual EcoVadis review results may differ.</span></div>
     <div class="cs-toolbar" id="eco-catbar"></div>
+    <div class="eco-scroll-hint"><span class="i18n-ko">→ 가로로 스크롤하면 이행 상태·메모까지 볼 수 있습니다</span><span class="i18n-en">→ Scroll horizontally to see status and notes</span></div>
     <div class="listwrap"><table class="cs-table" id="eco-table"></table></div>
   </div>
 
@@ -2269,7 +2277,7 @@ function renderEcoCatBar(){
 function renderEcoTable(){
   const K=LANG==='ko';
   const catsToShow=ecoCat==='all'?ECO_CATS:ECO_CATS.filter(c=>c.id===ecoCat);
-  let html=`<thead><tr><th style="width:26px">#</th><th style="width:32px"></th><th>${K?'항목':'Item'}</th>
+  let html=`<thead><tr><th class="eco-sticky1" style="width:26px">#</th><th class="eco-sticky2" style="width:32px"></th><th class="eco-sticky3">${K?'항목':'Item'}</th>
     <th style="width:70px">${K?'우선순위':'Priority'}</th><th style="width:150px">${K?'이행 상태':'Status'}</th><th>${K?'비고':'Note'}</th></tr></thead><tbody>`;
   catsToShow.forEach(cat=>{
     if(ecoCat==='all')html+=`<tr class="cat-header"><td colspan="6">${cat.emoji} ${ecoCATL(cat)}</td></tr>`;
@@ -2278,11 +2286,11 @@ function renderEcoTable(){
       const note=ecoNotes[item.id]||'';
       const isOpen=!!ecoOpen[item.id];
       html+=`<tr>
-        <td class="eco-num">${String(i+1).padStart(2,'0')}</td>
-        <td style="text-align:center"><button class="eco-info-btn${isOpen?' open':''}" data-info="${item.id}" title="${K?'평가기준 보기':'View criteria'}">
+        <td class="eco-num eco-sticky1">${String(i+1).padStart(2,'0')}</td>
+        <td class="eco-sticky2" style="text-align:center"><button class="eco-info-btn${isOpen?' open':''}" data-info="${item.id}" title="${K?'평가기준 보기':'View criteria'}">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
         </button></td>
-        <td><div class="eco-name">${ecoINAME(item)}</div><div class="eco-sub">${ecoISUB(item)}</div></td>
+        <td class="eco-sticky3"><div class="eco-name">${ecoINAME(item)}</div><div class="eco-sub">${ecoISUB(item)}</div></td>
         <td><span class="eco-pri ${item.pri}">${ecoPRI(item.pri)}</span></td>
         <td><div class="eco-stgrp">${['','partial','done','star'].map(s=>
           `<button class="eco-stbtn ${ECO_ST_CLASS[s]}${st===s?' sel':''}" data-st="${item.id}|${s}" title="${ecoSTL(s)}">${ECO_ST_MARK[s]}</button>`).join('')}</div></td>
