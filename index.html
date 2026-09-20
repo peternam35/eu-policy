@@ -2377,6 +2377,20 @@ window.addEventListener('resize',measure);
 document.documentElement.setAttribute('data-lang','ko');
 renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure();
 
+/* ===== 팝업 포커스 트랩 공용 헬퍼 — 세 팝업(국가비교·지난 기록·모바일 필터)이 동일하게 사용 ===== */
+function focusables(container){
+  return [...container.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+    .filter(el=>el.offsetParent!==null);
+}
+function trapTab(e,container){
+  if(e.key!=='Tab')return;
+  const els=focusables(container);
+  if(!els.length)return;
+  const first=els[0],last=els[els.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+}
+
 /* ===== G20 ESG 규제 인텔리전스 — 통합 모듈 (IIFE, 전역 변수 충돌 방지) =====
    기준일: 2026-08-01 (2026-09-20 기준 EU 탭과 분리 유지 — G20 개별국 미조사). EU는 "기관 경로" 탭의 실제 추적 법안
    배열(P/EN_P, 11건)을 그대로 재사용해 탭 간 수치를 일치시킨다. 그 외 16개국은
@@ -2710,7 +2724,11 @@ renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure(
   });
   closeBtn?.addEventListener('click',closeModal);
   modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal();});
+  document.addEventListener('keydown',e=>{
+    if(modal.hidden)return;
+    if(e.key==='Escape'){closeModal();return;}
+    trapTab(e,modal);
+  });
 
   /* 언어·초기 진입 시 재동기화 훅 — index.html의 goto()에서 vi===3(G20)일 때 호출 */
   window.g20Refresh=function(){
@@ -2810,6 +2828,7 @@ renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure(
     lastFocus=document.activeElement;
     modal.hidden=false;
     ensureManifest();
+    closeBtn.focus();
     document.addEventListener('keydown',onKey);
   }
   function close(){
@@ -2817,7 +2836,7 @@ renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure(
     document.removeEventListener('keydown',onKey);
     if(lastFocus&&lastFocus.focus)lastFocus.focus();
   }
-  function onKey(e){if(e.key==='Escape')close();}
+  function onKey(e){if(e.key==='Escape'){close();return;}trapTab(e,modal);}
 
   openBtn.addEventListener('click',open);
   closeBtn.addEventListener('click',close);
@@ -2841,6 +2860,7 @@ renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure(
     lastFocus=document.activeElement;
     slot.appendChild(asideEl);
     modal.hidden=false;
+    closeBtn.focus();
     document.addEventListener('keydown',onKey);
   }
   function close(){
@@ -2849,7 +2869,7 @@ renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure(
     document.removeEventListener('keydown',onKey);
     if(lastFocus&&lastFocus.focus)lastFocus.focus();
   }
-  function onKey(e){if(e.key==='Escape')close();}
+  function onKey(e){if(e.key==='Escape'){close();return;}trapTab(e,modal);}
 
   btn.addEventListener('click',open);
   closeBtn.addEventListener('click',close);
