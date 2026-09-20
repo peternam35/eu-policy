@@ -2307,6 +2307,8 @@ document.getElementById('nextBtn').onclick=()=>goto(vi+1);
 document.getElementById('pgPrev').onclick=()=>{if(vi>0)goto(vi-1)};
 document.getElementById('pgNext').onclick=()=>{if(vi<4)goto(vi+1)};
 document.addEventListener('keydown',e=>{
+  const t=e.target,tag=t&&t.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(t&&t.isContentEditable))return;
   if(e.key==='ArrowRight'&&vi<4)goto(vi+1);
   if(e.key==='ArrowLeft'&&vi>0)goto(vi-1);});
 
