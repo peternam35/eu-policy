@@ -1740,7 +1740,7 @@ function renderReview(){
   const r=reviewData()[vi];
   const K=LANG==='ko';
   document.getElementById('review').innerHTML=`
-    <div class="rvhd"><div class="t"><i>${vi+1}/3</i>${r.title} — ${K?'강평 및 시사점':'Analysis & implications'}</div>
+    <div class="rvhd"><div class="t"><i>EU ${vi+1}/3</i>${r.title} — ${K?'강평 및 시사점':'Analysis & implications'}</div>
       <div class="lens">${r.lens}</div></div>
     <div class="rvgrid">${r.items.map(i=>`<div class="rvi">
       <span class="tp">${i.tp}</span><div class="as">${i.as}</div><div class="im">${i.im}</div></div>`).join('')}</div>
