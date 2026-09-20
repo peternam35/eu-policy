@@ -180,6 +180,15 @@ header{border-bottom:1px solid var(--rule);background:var(--raised);position:sti
 
 aside{background:var(--sunken);border-right:1px solid var(--rule);padding:16px 0 40px;
   position:sticky;top:var(--hdrh,150px);height:calc(100vh - var(--hdrh,150px));overflow-y:auto}
+.mobile-filter-btn{display:none}
+@media(max-width:980px){
+  .mobile-filter-btn{display:block;width:100%;margin:14px 0 0;padding:9px 14px;border-radius:8px;
+    border:1px solid var(--rule);background:var(--raised);color:var(--ink-strong);
+    font-size:12.5px;font-weight:700;text-align:center;cursor:pointer}
+}
+.shell.hide-eu-filters .mobile-filter-btn{display:none!important}
+#mobileFilterSlot aside{display:block;position:static;height:auto;max-height:70vh;overflow-y:auto;
+  border-right:none;background:transparent;padding:4px 0}
 .tsec{padding:0 12px;margin-bottom:14px}
 .tsec > .eb{display:block;padding:8px 8px 5px}
 .tnode{display:flex;align-items:center;gap:8px;width:100%;padding:5px 8px;border-radius:5px;
@@ -757,6 +766,7 @@ body.embedded .htitle .s{font-size:10px}
 </aside>
 
 <main>
+  <button id="mobileFilterOpen" class="mobile-filter-btn" type="button"><span class="i18n-ko">필터 · 조직 열기</span><span class="i18n-en">Open organisation filter</span></button>
   <div class="review" id="review"></div>
   <div class="filtbar" id="filtbar"></div>
 
@@ -908,6 +918,18 @@ body.embedded .htitle .s{font-size:10px}
         <select id="archive-date-select" style="padding:6px 10px;border-radius:8px;border:1px solid var(--ink-faint);background:var(--raised);color:inherit"></select>
       </div>
       <div id="archive-result" class="g20-compare-result" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- ===== 모바일 조직 필터 서랍 (실제 <aside>를 이동시켜 재사용 — 마크업 중복 없음) ===== -->
+  <div id="mobile-filter-modal" class="g20-modal" hidden>
+    <div class="g20-modal-panel" role="dialog" aria-modal="true" aria-labelledby="mobile-filter-title">
+      <header>
+        <div><span class="eb">ORGANISATION FILTER</span>
+          <h3 id="mobile-filter-title"><span class="i18n-ko">필터 · 조직</span><span class="i18n-en">Filter · organisation</span></h3></div>
+        <button id="mobileFilterClose" class="g20-close" type="button" aria-label="닫기">×</button>
+      </header>
+      <div id="mobileFilterSlot"></div>
     </div>
   </div>
 
@@ -2824,6 +2846,38 @@ renderDist();syncAll();renderDetail();renderComm();bindOlinks();goto(0);measure(
   closeBtn.addEventListener('click',close);
   modal.addEventListener('click',e=>{if(e.target===modal)close();});
   sel.addEventListener('change',()=>showDate(sel.value));
+})();
+
+/* ===== 모바일 조직 필터 서랍 — <aside>를 모달로 이동/복귀시킬 뿐, 필터 로직/이벤트 핸들러는 그대로 재사용 ===== */
+(function(){
+  const btn=document.getElementById('mobileFilterOpen'),
+    modal=document.getElementById('mobile-filter-modal'),
+    closeBtn=document.getElementById('mobileFilterClose'),
+    slot=document.getElementById('mobileFilterSlot'),
+    asideEl=document.querySelector('aside'),
+    shellEl=document.querySelector('.shell'),
+    mainEl=document.querySelector('main');
+  if(!btn||!modal||!slot||!asideEl||!shellEl||!mainEl)return;
+
+  let lastFocus=null;
+  function open(){
+    lastFocus=document.activeElement;
+    slot.appendChild(asideEl);
+    modal.hidden=false;
+    document.addEventListener('keydown',onKey);
+  }
+  function close(){
+    shellEl.insertBefore(asideEl,mainEl);
+    modal.hidden=true;
+    document.removeEventListener('keydown',onKey);
+    if(lastFocus&&lastFocus.focus)lastFocus.focus();
+  }
+  function onKey(e){if(e.key==='Escape')close();}
+
+  btn.addEventListener('click',open);
+  closeBtn.addEventListener('click',close);
+  modal.addEventListener('click',e=>{if(e.target===modal)close();});
+  window.addEventListener('resize',()=>{if(!modal.hidden&&window.innerWidth>980)close();});
 })();
 </script>
 </body>
