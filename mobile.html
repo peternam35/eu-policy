@@ -2380,6 +2380,14 @@ document.addEventListener('keydown',e=>{
   if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(t&&t.isContentEditable))return;
   if(e.key==='ArrowRight'&&vi<4)goto(vi+1);
   if(e.key==='ArrowLeft'&&vi>0)goto(vi-1);});
+/* role="button" div 카드(조직도 onode 등)는 네이티브 버튼이 아니라 Enter/Space가 자동으로 클릭을 발생시키지 않는다 */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter'&&e.key!==' '&&e.key!=='Spacebar')return;
+  const t=e.target;
+  if(!t||t.getAttribute('role')!=='button')return;
+  e.preventDefault();
+  t.click();
+});
 
 /* ===== 테마 ===== */
 function setTheme(t){
