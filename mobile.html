@@ -287,7 +287,7 @@ table{width:100%;border-collapse:collapse;font-size:12px}
 thead th{font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--signal);text-align:left;
   padding:9px 11px;border-bottom:1px solid var(--signal-deep);white-space:nowrap;font-weight:700}
 tbody td{padding:11px;border-bottom:1px solid var(--rule-soft);vertical-align:top;line-height:1.55}
-tbody tr{cursor:pointer;transition:.1s}
+tbody tr{transition:.1s}tbody tr[data-id]{cursor:pointer}tbody tr.exprow,tbody tr.exprow *{cursor:default}
 tbody tr:hover td{background:rgba(var(--overlay-rgb),.028)}
 tbody tr.sel td{background:rgba(var(--signal-rgb),.07)}
 tbody tr:last-child td{border-bottom:0}
